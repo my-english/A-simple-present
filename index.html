@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Present & Adverbs of Frequency Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+    }
+    .question-box {
+      margin-bottom: 20px;
+    }
+    .question {
+      font-weight: bold;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    #nextBtn {
+      margin-top: 10px;
+    }
+    #result {
+      font-weight: bold;
+      color: green;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Simple Present & Adverbs of Frequency Quiz</h2>
+  <div id="quiz-container">
+    <div class="question-box" id="question-box">
+      <p class="question" id="question">Loading...</p>
+      <div class="options" id="options"></div>
+    </div>
+    <button id="nextBtn">Next</button>
+    <p id="result"></p>
+  </div>
+
+  <script>
+    const quiz = [
+      {
+        question: "She ___ to school every day.",
+        options: ["go", "goes", "going", "gone"],
+        answer: "goes"
+      },
+      {
+        question: "I ___ breakfast at 7:00 a.m.",
+        options: ["eat", "eats", "eating", "ate"],
+        answer: "eat"
+      },
+      {
+        question: "They ___ play football on Sundays.",
+        options: ["always", "never", "usually", "All of the above are possible"],
+        answer: "All of the above are possible"
+      },
+      {
+        question: "My brother ___ drinks coffee. He hates it!",
+        options: ["always", "usually", "never", "sometimes"],
+        answer: "never"
+      },
+      {
+        question: "We ___ watch TV in the evening.",
+        options: ["often", "never", "goes", "watches"],
+        answer: "often"
+      },
+      {
+        question: "She ___ her homework after school.",
+        options: ["do", "does", "did", "doing"],
+        answer: "does"
+      },
+      {
+        question: "I ___ late for class.",
+        options: ["am never", "never am", "is never", "be never"],
+        answer: "am never"
+      },
+      {
+        question: "He ___ gets up at 6 a.m.",
+        options: ["sometimes", "never", "always", "All are correct"],
+        answer: "All are correct"
+      },
+      {
+        question: "We ___ to the gym on weekends.",
+        options: ["goes", "go", "going", "gone"],
+        answer: "go"
+      },
+      {
+        question: "She ___ wears a jacket in summer.",
+        options: ["always", "never", "usually", "often"],
+        answer: "never"
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    const questionEl = document.getElementById("question");
+    const optionsEl = document.getElementById("options");
+    const nextBtn = document.getElementById("nextBtn");
+    const resultEl = document.getElementById("result");
+
+    function loadQuestion() {
+      const q = quiz[currentQuestion];
+      questionEl.textContent = q.question;
+      optionsEl.innerHTML = "";
+      resultEl.textContent = "";
+
+      q.options.forEach(option => {
+        const label = document.createElement("label");
+        label.innerHTML = `<input type="radio" name="option" value="${option}"> ${option}`;
+        optionsEl.appendChild(label);
+      });
+    }
+
+    nextBtn.addEventListener("click", () => {
+      const selected = document.querySelector('input[name="option"]:checked');
+      if (!selected) {
+        alert("Please select an answer.");
+        return;
+      }
+
+      const answer = selected.value;
+      if (answer === quiz[currentQuestion].answer) {
+        score++;
+      }
+
+      currentQuestion++;
+      if (currentQuestion < quiz.length) {
+        loadQuestion();
+      } else {
+        quizEnd();
+      }
+    });
+
+    function quizEnd() {
+      questionEl.textContent = "Quiz Completed!";
+      optionsEl.innerHTML = "";
+      nextBtn.style.display = "none";
+      resultEl.textContent = `Your score: ${score} out of ${quiz.length}`;
+    }
+
+    loadQuestion();
+  </script>
+
+</body>
+</html>
